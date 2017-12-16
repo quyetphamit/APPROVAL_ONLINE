@@ -1,0 +1,305 @@
+﻿@model SUPPORT_APPROVAL_ONLINE.Models.tbl_Request
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tbl_Request</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_Customer.customer_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_Customer.customer_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_User.U_username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_User.U_username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.U_Id_Approval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.U_Id_Approval)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.U_Id_Dept_MNG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.U_Id_Dept_MNG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.U_Id_LCA_Leader)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.U_Id_LCA_Leader)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.U_Id_LCA_MNG)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.U_Id_LCA_MNG)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.U_Id_FM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.U_Id_FM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.U_Id_GD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.U_Id_GD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dealLine)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dealLine)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.increaseProductivity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.increaseProductivity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.newModel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.newModel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.increaseProduction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.increaseProduction)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.improve)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.improve)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.C_5s)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.C_5s)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.checkJig)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.checkJig)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.reducePeple)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.reducePeple)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.errorContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.errorContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.currentError)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.currentError)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.afterError)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.afterError)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cost_Savings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cost_Savings)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.other)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.other)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pcb)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pcb)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.contentDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contentDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_Create)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_Create)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_Update)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_Update)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_Received)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_Received)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_Finish)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_Finish)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.file_upload)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.file_upload)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.file_upload_update)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.file_upload_update)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.costDetail_upload)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.costDetail_upload)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

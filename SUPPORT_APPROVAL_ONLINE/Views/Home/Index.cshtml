@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.ActionLink("Chuyển tới danh sách","Index","Request")
+<h2>Danh sách các năm</h2>
+@foreach (var item in ViewBag.listYear)
+{
+    <button type="button" class="button" onclick="location.href='@Url.Action("Index", "Request")'"><span>@item</span></button>
+    <br />
+}

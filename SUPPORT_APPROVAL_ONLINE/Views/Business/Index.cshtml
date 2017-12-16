@@ -1,0 +1,238 @@
+﻿@model IEnumerable<SUPPORT_APPROVAL_ONLINE.Models.tbl_Request>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_Customer.customer_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_User.U_username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Id_Approval)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Id_Dept_MNG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Id_LCA_Leader)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Id_LCA_MNG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Id_FM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Id_GD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dealLine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.increaseProductivity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.newModel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.increaseProduction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.improve)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.C_5s)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.checkJig)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.reducePeple)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.errorContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.currentError)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.afterError)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cost_Savings)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.other)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pcb)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.contentDetail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_Create)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_Update)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_Received)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date_Finish)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.file_upload)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.file_upload_update)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.costDetail_upload)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbl_Customer.customer_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbl_User.U_username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Id_Approval)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Id_Dept_MNG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Id_LCA_Leader)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Id_LCA_MNG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Id_FM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Id_GD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dealLine)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.increaseProductivity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.newModel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.increaseProduction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.improve)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.C_5s)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkJig)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.reducePeple)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.errorContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.currentError)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.afterError)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cost_Savings)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.other)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pcb)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.contentDetail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_Create)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_Update)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_Received)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date_Finish)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.file_upload)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.file_upload_update)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.costDetail_upload)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

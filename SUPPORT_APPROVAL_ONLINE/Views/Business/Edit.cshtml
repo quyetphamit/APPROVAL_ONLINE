@@ -1,0 +1,497 @@
+﻿@model SUPPORT_APPROVAL_ONLINE.Models.tbl_Request
+@using SUPPORT_APPROVAL_ONLINE.Models
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var currDate = DateTime.Now.ToString("dd/MM/yyyy");
+    var userSession = Session["user"] as tbl_User;
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit","Business"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Bộ phận yêu cầu</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @Html.HiddenFor(model => model.U_Id_Approval)
+                @Html.HiddenFor(model => model.U_Id_Create)
+                @Html.HiddenFor(model => model.date_Create)
+                @Html.HiddenFor(model => model.customer_Id)
+                @Html.HiddenFor(model =>model.U_Id_Dept_MNG)
+                @Html.HiddenFor(model => model.U_Id_LCA_Leader)
+                @Html.HiddenFor(model => model.U_Id_LCA_MNG)
+                @Html.HiddenFor(model => model.U_Id_FM)
+                @Html.HiddenFor(model => model.U_Id_GD)
+                @Html.HiddenFor(model => model.dealLine)
+                <div class="form-group">
+                    <label class="control-label col-md-1" for="content">@Html.DisplayNameFor(m => m.title)</label>
+                    <div class="col-md-11">
+                        @Html.TextBoxFor(m => m.title, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.contentDetail)</label>
+                    <div class="col-md-11">
+                        @Html.TextAreaFor(m => m.contentDetail, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <script type="text/javascript">
+                        CKEDITOR.replace("contentDetail");
+                    </script>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.file_upload)</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.file_upload, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-md-1">
+                        @Html.ActionLink("View PDF", "ViewPDF", "Business", new { name = Model.file_upload }, new { target = "_blank" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.quantity)</label>
+                    <div class="col-md-1">
+                        @Html.TextBoxFor(m => m.quantity, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.dealLine)</label>
+                    <div class="col-md-2">
+                        <div class="form-control">@Html.DisplayFor(m=>m.dealLine)</div>
+                        @*@Html.EditorFor(m => m.dealLine, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })*@
+                        @Html.ValidationMessageFor(model => model.dealLine, "", new { @class = "text-danger" })
+                    </div>
+                    <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.tbl_Customer.customer_Name)</label>
+                    <div class="col-md-1">
+                        @Html.TextBoxFor(m => m.tbl_Customer.customer_Name, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.model)</label>
+                    <div class="col-md-1">
+                        @Html.TextBoxFor(m => m.model, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.pcb)</label>
+                    <div class="col-md-1">
+                        @Html.TextBoxFor(m => m.pcb, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Phân loại Jig</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.increaseProductivity, new { @class = "flat", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.increaseProductivity)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.newModel, new { @class = "flat", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.newModel)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.increaseProduction, new { @class = "flat", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.increaseProduction)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.improve, new { @class = "flat", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.improve)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.C_5s, new { @class = "flat", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.C_5s)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.checkJig, new { @class = "flat", @disabled = "disabled" })
+                            @Html.LabelFor(model => model.checkJig)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Ước lượng hiệu quả khi áp dụng mới</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label><input type="checkbox" readonly class="js-switch" id="switch1" /> Cắt giảm người</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label><input type="checkbox" readonly class="js-switch" id="switch2" /> Hiệu quả cải tiến chất lượng</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label><input type="checkbox" readonly class="js-switch" id="switch3" /> Tiết kiệm chi phí</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label><input type="checkbox" readonly class="js-switch" id="switch4" /> Other</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.reducePeple, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-md-1">
+                        <label>Người</label>
+                    </div>
+                    @Html.LabelFor(model => model.errorContent, htmlAttributes: new { @class = "control-label col-md-1" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(model => model.errorContent, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-md-2">
+                        @*<input type="text" name="name" placeholder="Tiết kiệm chi phí" class="form-control" />*@
+                        @Html.TextBoxFor(model => model.cost_Savings, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="col-md-1">
+                        <label>USD</label>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.other, new { @class = "form-control", @readonly = "readonly", placeholder = "Please enter the text!" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.currentError, htmlAttributes: new { @class = "control-label col-md-1 col-md-offset-3" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(model => model.currentError, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.afterError, htmlAttributes: new { @class = "control-label col-md-1 col-md-offset-3" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(model => model.afterError, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Chi trả</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="form-group">
+                    @*@Html.LabelFor(model => model.pay, htmlAttributes: new { @class = "control-label col-md-1" })*@
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(model => model.pay, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (userSession.tbl_Permission.allow.Equals("admin") && userSession.tbl_Group.group_Name.Contains("LCA") && !userSession.tbl_Group.group_Name.Contains("MNG"))
+        {
+            <div class="x_panel" style="background-color:#5af287">
+                <div class="x_title">
+                    <h2 class="label label-danger">Dành cho LCA</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.date_Received, new { @class = "control-label col-md-1" })
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" value="@currDate" disabled />
+                        </div>
+                        @Html.LabelFor(m => m.date_Finish, new { @class = "control-label col-md-1" })
+                        @*<div class="col-md-2">
+                                @Html.TextBoxFor(m => m.date_Finish, new { @class = "form-control" })
+                            </div>*@
+                        <div class="col-md-2">
+                            <div class='input-group date' id='datepicker1'>
+                                @Html.EditorFor(model => model.date_Finish, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            @*@Html.ValidationMessageFor(model => model.date_Finish, "dateFinishNull", new { @class = "text-danger" })*@
+                            @Html.ValidationMessage("dateFinishNull",new { @class = "text-danger"})
+                        </div>
+                        @Html.LabelFor(m => m.cost, new { @class = "control-label col-md-1" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(m => m.cost, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("costNull", new { @class = "text-danger" })
+                        </div>
+                        <label class="control-label col-md-1">File Upload</label>
+                        <div class="col-md-1">
+                            @Html.EditorFor(m => m.costDetail_upload, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="col-md-1">
+                            <input type="button" id="Brow" class="btn btn-default btn-sm" value="Choose file" />
+                        </div>
+                        <script type="text/javascript">
+                            $("#Brow").click(function () {
+                                //alert("a");
+                                var finder = new CKFinder();
+                                finder.selectActionFunction = function (fileUrl) {
+                                    $("#costDetail_upload").val(fileUrl);
+                                };
+                                finder.popup();
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Gửi xác nhận tới</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="form-group">
+                    @*<label class="control-label col-md-2">Gửi đến bộ phận</label>*@
+                    <div class="col-md-3">
+                        @Html.DropDownList("group_Id", null, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-6 col-md-3">
+                <table>
+                    <tr>
+                        <th>Phê duyệt</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="name" disabled /></td>
+
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="phone" disabled /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-sm-9 col-xs-12 col-md-offset-3">
+                <input type="submit" value="Approval" class="btn btn-success btn-lg" />
+                <input type="button" value="Cancel" class="btn btn-primary btn-lg" />
+            </div>
+        </div>
+        @*<input type="checkbox" id="cbx1" onclick="return readOnlyCheckBox()" CHECKED /> readonly*@
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var element = $("#group_Id").val();
+        $.ajax({
+            url: "@Url.Action("FindUser", "Request")",
+            type: 'GET',
+            data: { groupId: element },
+            async: true,
+            success: function (data) {
+                $("#U_Id_Approval").val(data["id"]);
+                $("#name").val(data["name"]);
+                $("#phone").val(data["phone"]);
+            }
+        });
+        $('#datepicker1').datetimepicker({
+            ignoreReadonly: true,
+            allowInputToggle: true,
+            format: 'YYYY-MM-DD'
+        });
+
+        var reducePeple = $("#reducePeple").val();
+        var errorContent = $("#errorContent").val();
+        var currentError = $("#currentError").val();
+        var afterError = $("#afterError").val();
+        var cost_Savings = $("#cost_Savings").val();
+        var other = $("#other").val();
+        if (reducePeple) {
+            $('#switch1').attr('checked', true);
+        }
+        if (errorContent || currentError || afterError) {
+            $('#switch2').attr('checked', true);
+        }
+        if (cost_Savings) {
+            $('#switch3').attr('checked', true);
+        }
+        if (other) {
+            $('#switch4').attr('checked', true);
+        }
+    });
+
+
+    $("#group_Id").on('change', function (e) {
+        var element = $(this).val();
+        $.ajax({
+            url: "@Url.Action("FindUser", "Request")",
+            type: 'GET',
+            data: { groupId: element },
+            async: true,
+            success: function (data) {
+                //alert(data["userApproval"]);
+                $("#U_Id_Approval").val(data["id"]);
+                $("#name").val(data["name"]);
+                $("#phone").val(data["phone"]);
+            }
+        });
+
+        //FindUser("#group_Id");
+    });
+
+    function FindUser(groupId) {
+        var element = $(this).val();
+        $.ajax({
+            url: "@Url.Action("FindUser", "Request")",
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: { groupId: element },
+            async: true,
+            success: function (data) {
+                //alert(data["userApproval"]);
+                $("#U_Id_Approval").val(data["id"]);
+                $("#name").val(data["name"]);
+                $("#phone").val(data["phone"]);
+            },
+            error: function (e) {
+                alert(e);
+            }
+        });
+    }
+    //function readOnlyCheckBox() {
+    //    alert("a");
+    //    return false;
+    //}
+</script>
