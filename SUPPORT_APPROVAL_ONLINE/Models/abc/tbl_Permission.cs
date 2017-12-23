@@ -1,4 +1,4 @@
-﻿namespace SUPPORT_APPROVAL_ONLINE.Models
+namespace SUPPORT_APPROVAL_ONLINE.Models.abc
 {
     using System;
     using System.Collections.Generic;
@@ -15,10 +15,10 @@
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int permission_Id { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Quyền")]
         public string allow { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

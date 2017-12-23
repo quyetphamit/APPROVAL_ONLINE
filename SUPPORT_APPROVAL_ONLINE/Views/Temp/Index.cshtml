@@ -1,16 +1,14 @@
 ﻿@model IEnumerable<SUPPORT_APPROVAL_ONLINE.Models.tbl_User>
-
+@using SUPPORT_APPROVAL_ONLINE.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = Session["user"] as tbl_User;
+    //var totalRecord = Model.Where(r => r.userId_Approval == user.user_Id).Count();
 }
+@Html.ActionLink("Danh sách yêu cầu","ListRequest")
 
-<h2>@Html.ActionLink("Danh sách yêu cầu", "ListRequest")</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
+<div id="test"></div>
 <div class="x_panel">
     <div class="x_title">
         <h2>Danh sách tài khoản</h2>
@@ -40,7 +38,7 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.username)
+                        @Html.DisplayNameFor(model => model.U_username)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.tbl_Group.group_Name)
@@ -49,13 +47,13 @@
                         @Html.DisplayNameFor(model => model.tbl_Permission.allow)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.fullname)
+                        @Html.DisplayNameFor(model => model.U_fullname)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.phone)
+                        @Html.DisplayNameFor(model => model.U_phone)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.email)
+                        @Html.DisplayNameFor(model => model.U_email)
                     </th>
                     <th></th>
                 </tr>
@@ -65,7 +63,7 @@
             {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.username)
+                            @Html.DisplayFor(modelItem => item.U_username)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.tbl_Group.group_Name)
@@ -74,18 +72,18 @@
                             @Html.DisplayFor(modelItem => item.tbl_Permission.allow)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.fullname)
+                            @Html.DisplayFor(modelItem => item.U_fullname)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.phone)
+                            @Html.DisplayFor(modelItem => item.U_phone)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.email)
+                            @Html.DisplayFor(modelItem => item.U_email)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.U_Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.U_Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.U_Id })
                         </td>
                     </tr>
                 }
@@ -93,3 +91,18 @@
         </table>
     </div>
 </div>
+<script>
+    $("select").change(function () {
+        $.ajax({
+            url: "@Url.Action("Index", "Sakura")",
+            type: 'GET',
+            dataType: "html",
+            async: true,
+            success: function (data) {
+                alert("a");
+                $("#test").html(data);
+            }
+        });
+    });
+
+</script>

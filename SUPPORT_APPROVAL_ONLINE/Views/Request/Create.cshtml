@@ -16,7 +16,7 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.U_Id_Approval)
+        @Html.HiddenFor(model => model.U_Id_LCA_Leader)
         <div class="x_panel">
             <div class="x_title">
                 <h2>Bộ phận yêu cầu</h2>
@@ -433,12 +433,12 @@
                         <th>Phê duyệt</th>
                     </tr>
                     <tr>
-                        <td><input type="text" value="@userSession.U_fullname" disabled /></td>
+                        <td><input type="text" value="@userSession.fullname" disabled /></td>
                         <td><input type="text" id="name" disabled /></td>
 
                     </tr>
                     <tr>
-                        <td><input type="text" value="@userSession.U_phone" disabled /></td>
+                        <td><input type="text" value="@userSession.phone" disabled /></td>
                         <td><input type="text" id="phone" disabled /></td>
                     </tr>
                 </table>
@@ -462,7 +462,7 @@
             async: true,
             success: function (data) {
                 //alert(data["userApproval"]);
-                $("#U_Id_Approval").val(data["id"]);
+                $("#U_Id_LCA_Leader").val(data["id"]);
                 $("#name").val(data["name"]);
                 $("#phone").val(data["phone"]);
             }
@@ -551,7 +551,7 @@
             async: true,
             success: function (data) {
                 //alert(data["userApproval"]);
-                $("#U_Id_Approval").val(data["id"]);
+                $("#U_Id_LCA_Leader").val(data["id"]);
                 $("#name").val(data["name"]);
                 $("#phone").val(data["phone"]);
             }
@@ -570,7 +570,7 @@
             async: true,
             success: function (data) {
                 //alert(data["userApproval"]);
-                $("#U_Id_Approval").val(data["id"]);
+                $("#U_Id_LCA_Leader").val(data["id"]);
                 $("#name").val(data["name"]);
                 $("#phone").val(data["phone"]);
             },

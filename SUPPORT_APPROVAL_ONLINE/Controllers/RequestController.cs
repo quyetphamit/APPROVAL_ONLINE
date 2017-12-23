@@ -21,15 +21,7 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         {
             sess = Session["user"] as tbl_User;
             var tbl_Request = db.tbl_Request.Include(t => t.tbl_Customer).Include(t => t.tbl_User);
-            ViewBag.totalRecord = db.tbl_Request.Where(r => r.U_Id_Approval == sess.U_Id).Count();
-            return View(tbl_Request.ToList());
-        }
-        [HttpGet]
-        public ActionResult Test()
-        {
-            sess = Session["user"] as tbl_User;
-            var tbl_Request = db.tbl_Request.Include(t => t.tbl_Customer).Include(t => t.tbl_User);
-            ViewBag.totalRecord = db.tbl_Request.Where(r => r.U_Id_Approval == sess.U_Id).Count();
+            ViewBag.totalRecord = db.tbl_Request.Where(r => r.U_Id_Approval == sess.id).Count();
             List<RequestStatus> list = Common.Mapping(tbl_Request.ToList());
             return View(list);
         }
@@ -46,6 +38,41 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             {
                 return HttpNotFound();
             }
+            var userCreate = db.tbl_User.Find(tbl_Request.U_Id_Create);
+
+            var deptMGN = db.tbl_User.Find(tbl_Request.U_Id_Dept_MNG);
+
+
+
+            ViewBag.requestorName = userCreate.fullname;
+            ViewBag.requestorPhone = userCreate.phone;
+            ViewBag.deptMGNName = deptMGN.fullname;
+            ViewBag.deptMNGPhone = deptMGN.phone;
+            ViewBag.deptMGNStamp = deptMGN.stamp;
+            var lcaLeader = db.tbl_User.Find(tbl_Request.U_Id_LCA_Leader);
+
+            ViewBag.lcaLeaderStamp = lcaLeader.stamp;
+            ViewBag.lcaLeaderName = lcaLeader.fullname;
+            ViewBag.lcaLeaderPhone = lcaLeader.phone;
+
+
+            var lcaMNG = db.tbl_User.Find(tbl_Request.U_Id_LCA_MNG);
+
+            ViewBag.lcaMNGName = lcaMNG.fullname;
+            ViewBag.lcaMNGPhone = lcaMNG.phone;
+            ViewBag.lcaMNGStamp = lcaMNG.stamp;
+
+            var fm = db.tbl_User.Find(tbl_Request.U_Id_FM);
+            ViewBag.fmName = fm.fullname;
+            ViewBag.fmPhone = fm.phone;
+            ViewBag.fmStamp = fm.stamp;
+
+            var gd = db.tbl_User.Find(tbl_Request.U_Id_GD);
+            ViewBag.gdName = gd.fullname;
+            ViewBag.gdPhone = gd.phone;
+            ViewBag.gdStamp = gd.stamp;
+
+            ViewBag.approved = tbl_Request.U_Id_Approval == 1 ? true : false;
             return View(tbl_Request);
         }
 
@@ -55,7 +82,7 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         {
             ViewBag.customer_Id = new SelectList(db.tbl_Customer, "customer_Id", "customer_Name");
             ViewBag.U_Id_Create = new SelectList(db.tbl_User, "U_Id", "U_username");
-            ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r => !r.group_Name.Contains("Support") && !r.group_Name.Contains("LCA")), "group_Id", "group_Name");
+            ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r => !r.group_Name.Contains("Support") && r.group_Name.Contains("LCA") && !r.group_Name.Contains("MNG")), "group_Id", "group_Name");
             return View();
         }
 
@@ -67,12 +94,21 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         public ActionResult Create([Bind(Include = "U_Id_Approval,U_Id_Dept_MNG,U_Id_LCA_Leader,U_Id_LCA_MNG,U_Id_FM,U_Id_GD,customer_Id,quantity,dealLine,title,increaseProductivity,newModel,increaseProduction,improve,C_5s,checkJig,reducePeple,errorContent,currentError,afterError,cost_Savings,other,pay,model,pcb,contentDetail,cost,date_Create,date_Update,date_Received,date_Finish,file_upload,file_upload_update,costDetail_upload")] tbl_Request tbl_Request)
         {
             sess = Session["user"] as tbl_User;
+            //SessionInfo info = new SessionInfo();
 
+            tbl_Request.U_Id_LCA_MNG = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("MNG-LCA") && r.tbl_Permission.allow.Contains("approval")).FirstOrDefault().id;
+            tbl_Request.U_Id_FM = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("FM") && r.tbl_Permission.allow.Contains("approval")).FirstOrDefault().id;
+
+            tbl_Request.U_Id_GD = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("GD") && r.tbl_Permission.allow.Contains("approval")).FirstOrDefault().id;
+
+            string groupName = db.tbl_User.Find(sess.id).tbl_Group.group_Name;
+            var deptMngId = db.tbl_User.Where(r => r.tbl_Group.group_Name.Equals(groupName) && r.tbl_Permission.allow.Equals("approval")).FirstOrDefault().id;
+            //Session["info"] = info;
 
             if (ModelState.IsValid)
             {
-                tbl_Request.U_Id_Dept_MNG = tbl_Request.U_Id_Approval;
-                tbl_Request.U_Id_Create = sess.U_Id;
+                tbl_Request.U_Id_Dept_MNG = tbl_Request.U_Id_Approval = deptMngId;
+                tbl_Request.U_Id_Create = tbl_Request.U_Id_Send = sess.id;
                 tbl_Request.date_Create = DateTime.Now;
                 db.tbl_Request.Add(tbl_Request);
                 db.SaveChanges();
@@ -99,7 +135,7 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             }
             ViewBag.customer_Id = new SelectList(db.tbl_Customer, "customer_Id", "customer_Name", tbl_Request.customer_Id);
             ViewBag.U_Id_Create = new SelectList(db.tbl_User, "U_Id", "U_username", tbl_Request.U_Id_Create);
-            if (sess.U_Id == tbl_Request.U_Id_Create)
+            if (sess.id == tbl_Request.U_Id_Create)
             {
                 return View(tbl_Request);
 
@@ -153,7 +189,7 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         [HttpGet]
         public JsonResult FindUser(int groupId)
         {
-            tbl_User user = db.tbl_User.Where(r => r.group_Id == groupId && r.tbl_Permission.allow.Equals("admin")).FirstOrDefault();
+            tbl_User user = db.tbl_User.Where(r => r.group_Id == groupId && r.tbl_Permission.allow.Equals("approval")).FirstOrDefault();
             if (user == null)
             {
                 return Json(new
@@ -164,9 +200,9 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             }
             return Json(new
             {
-                id = user.U_Id,
-                name = user.U_fullname,
-                phone = user.U_phone
+                id = user.id,
+                name = user.fullname,
+                phone = user.phone
             }, JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)

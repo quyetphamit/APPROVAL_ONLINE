@@ -6,10 +6,7 @@
 }
 
 <h2>Details</h2>
-
 <div>
-    <h4>tbl_User</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.tbl_Group.group_Name)
@@ -28,54 +25,50 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.username)
+            @Html.DisplayNameFor(model => model.U_username)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.username)
+            @Html.DisplayFor(model => model.U_username)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.U_fullname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.U_fullname)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.fullname)
+            @Html.DisplayNameFor(model => model.U_phone)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.fullname)
+            @Html.DisplayFor(model => model.U_phone)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.phone)
+            @Html.DisplayNameFor(model => model.U_email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.phone)
+            @Html.DisplayFor(model => model.U_email)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.email)
+            @Html.DisplayNameFor(model => model.U_create_at)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.stamp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.stamp)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.createAt)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.createAt)
+            @Html.DisplayFor(model => model.U_create_at)
         </dd>
 
     </dl>
 </div>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.U_Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -7,14 +7,14 @@ using System.Web.Mvc;
 
 namespace SUPPORT_APPROVAL_ONLINE.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private RequestEntity db = new RequestEntity();
         // GET: User
         public ActionResult Index()
         {
             var userSession = Session["user"] as tbl_User;
-            int id = userSession.U_Id;
+            int id = userSession.id;
             tbl_User tbl_User =  db.tbl_User.Find(id);
             if (tbl_User == null)
             {

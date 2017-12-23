@@ -6,17 +6,6 @@
     var user = Session["user"] as tbl_User;
     int no = 0;
 }
-<h3>
-    Danh sách cần phê duyệt&nbsp;
-    <a class="btn btn-app" href="@Url.Action("getRequestByUserApproval", "Business", new {id = user.id })">
-        <span class="badge bg-red">@ViewBag.totalRecord</span>
-        <i class="fa fa-bullhorn"></i> Notifications
-    </a>
-</h3>
-
-<a href="@Url.Action("Create")" class="btn btn-info btn-lg">
-    <span class="glyphicon glyphicon-plus"></span> Thêm mới
-</a>
 <div class="x_panel">
     <div class="x_title">
         <h2>Danh sách tất cả phiếu yêu cầu</h2>
@@ -97,8 +86,8 @@
                         }
 
                         @*<td>
-                            @Html.DisplayFor(modelItem => item.deptMNG)
-                        </td>*@
+                                @Html.DisplayFor(modelItem => item.deptMNG)
+                            </td>*@
                         @if (item.lcaLeader)
                         {
                             <td class="approvalOK">OK</td>
@@ -108,8 +97,8 @@
                             <td class="approvalNG">NG</td>
                         }
                         @*<td>
-                            @Html.DisplayFor(modelItem => item.lcaLeader)
-                        </td>*@
+                                @Html.DisplayFor(modelItem => item.lcaLeader)
+                            </td>*@
                         @if (item.lcaMNG)
                         {
                             <td class="approvalOK">OK</td>
@@ -119,8 +108,8 @@
                             <td class="approvalNG">NG</td>
                         }
                         @*<td>
-                            @Html.DisplayFor(modelItem => item.lcaMNG)
-                        </td>*@
+                                @Html.DisplayFor(modelItem => item.lcaMNG)
+                            </td>*@
                         @if (item.deptMNGConfirm)
                         {
                             <td class="approvalOK">OK</td>
@@ -130,8 +119,8 @@
                             <td class="approvalNG">NG</td>
                         }
                         @*<td>
-                            @Html.DisplayFor(modelItem => item.deptMNGConfirm)
-                        </td>*@
+                                @Html.DisplayFor(modelItem => item.deptMNGConfirm)
+                            </td>*@
                         @if (item.fm)
                         {
                             <td class="approvalOK">OK</td>
@@ -141,8 +130,8 @@
                             <td class="approvalNG">NG</td>
                         }
                         @*<td>
-                            @Html.DisplayFor(modelItem => item.fm)
-                        </td>*@
+                                @Html.DisplayFor(modelItem => item.fm)
+                            </td>*@
                         @if (item.gd)
                         {
                             <td class="approvalOK">OK</td>
@@ -152,8 +141,8 @@
                             <td class="approvalNG">NG</td>
                         }
                         @*<td>
-                            @Html.DisplayFor(modelItem => item.gd)
-                        </td>*@
+                                @Html.DisplayFor(modelItem => item.gd)
+                            </td>*@
                     </tr>
                 }
             </tbody>

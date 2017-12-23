@@ -31,6 +31,10 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
 
             return View();
         }
+        public ActionResult Chart()
+        {
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

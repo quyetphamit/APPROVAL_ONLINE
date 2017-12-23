@@ -1,40 +1,128 @@
 .button {
-  border-radius: 4px;
-  background-color: #f4511e;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 28px;
-  padding: 20px;
-  width: 100%;
-
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    width: 100%;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
 }
 
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-  font-size: 40px;
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+        font-size: 40px;
+    }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+    .button:hover span {
+        padding-right: 25px;
+    }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+.approvalOK {
+    background-color: #00ff21;
+    color: #000000;
 }
 
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
+.approvalNG {
+    background-color: #ff0000;
+    color: #000000;
 }
 
-.button:hover span {
-  padding-right: 25px;
+.rubber_stamp {
+    font-family: 'Vollkorn', serif;
+    /*text-transform: uppercase;*/
+    font-weight: bold;
+    color: red;
+    border: 7px solid red;
+    float: left;
+    padding: 10px 7px;
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    line-height: 200px;
+    text-align: center;
+    opacity: 0.8;
+    -webkit-transform: rotate(-10deg);
+    -o-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    -ms-transform: rotate(-10deg);
 }
 
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
+    .rubber_stamp::after {
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        top: -2px;
+        left: -2px;
+        padding: 10px;
+        background: url(https://raw.github.com/domenicosolazzo/css3/master/img/noise.png) repeat;
+    }
+
+    .rubber_stamp p {
+        line-height: 5px;
+        font-size: 15px;
+        border-bottom: 1px solid #f00;
+        margin-top: 9px;
+        margin-bottom: 0;
+        padding-bottom: 15px;
+    }
+
+        .rubber_stamp p:last-child {
+            border-bottom: none;
+        }
+
+
+.approved {
+    font-family: 'Vollkorn', serif;
+    font-size: 39px;
+    line-height: 45px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: red;
+    border: 7px solid red;
+    float: left;
+    padding: 10px 7px;
+    border-radius: 10px;
+    opacity: 0.8;
+    -webkit-transform: rotate(-10deg);
+    -o-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    -ms-transform: rotate(-10deg);
+    position: absolute;
+    top: 15%;
+    right: 10%;
 }
+
+    .approved::after {
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        top: -10px;
+        left: -10px;
+        padding: 10px;
+        background: url('../img/noise.png') repeat;
+    }

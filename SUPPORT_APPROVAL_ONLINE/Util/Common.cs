@@ -32,13 +32,18 @@ namespace SUPPORT_APPROVAL_ONLINE.Util
                 obj.IdOrigin = r.id;
                 obj.id = r.date_Create.Year + "-LCA-RQ" + r.id.ToString("000");
                 obj.title = r.title;
-                obj.requestor = r.tbl_User.U_fullname;
-                obj.deptMNG = r.U_Id_LCA_Leader != null;
-                obj.lcaLeader = r.U_Id_LCA_MNG != null;
-                obj.lcaMNG = r.U_Id_Approval == r.U_Id_Dept_MNG;
-                obj.deptMNGConfirm = r.U_Id_FM != null;
-                obj.fm = r.U_Id_GD != null;
-                obj.gd = false;
+                obj.requestor = r.tbl_User.fullname;
+
+                obj.deptMNG = r.date_Dept_MNG_Approval != null;
+
+                obj.lcaLeader = r.date_LCA_Leader_Approval != null;
+
+                obj.lcaMNG = r.date_LCA_MNG_Approval != null;
+
+                obj.deptMNGConfirm = r.date_Dept_Confirm != null;
+
+                obj.fm = r.date_FM_Approval != null;
+                obj.gd = r.date_GD_Approval != null;
                 result.Add(obj);
             });
             return result;

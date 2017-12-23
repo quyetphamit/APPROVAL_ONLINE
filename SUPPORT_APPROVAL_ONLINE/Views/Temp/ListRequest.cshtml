@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<SUPPORT_APPROVAL_ONLINE.Models.tbl_Request>
 
 @{
-    ViewBag.Title = "getRequestByUserCreate";
+    ViewBag.Title = "ListRequest";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="x_panel">
     <div class="x_title">
-        <h2>Danh sách đã tạo</h2>
+        <h2>Danh sách phiếu yêu cầu</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -30,12 +30,6 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-
-        @*<p>
-                <a href="@Url.Action("Create")" class="btn btn-info btn-lg">
-                    <span class="glyphicon glyphicon-plus"></span> Thêm mới
-                </a>
-            </p>*@
         <table id="datatable" class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -45,20 +39,8 @@
                     <th>
                         @Html.DisplayNameFor(model => model.title)
                     </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.quantity)
-                        </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.date_Create)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.dealLine)
-                    </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.phone)
-                        </th>*@
-                    <th>
-                        @Html.DisplayNameFor(model => model.cost)
                     </th>
                     <th>
                         <label>Người yêu cầu</label>
@@ -74,38 +56,24 @@
             {
                     <tr>
                         <td>
-                            <a href="@Url.Action("Details","Business",new {id = item.id })"> LCA @Html.DisplayFor(m => item.id) </a>
+                            LCA @Html.DisplayFor(m => item.id)
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.title)
                         </td>
-                        @*<td>
-                                @Html.DisplayFor(m => item.quantity)
-                            </td>*@
                         <td>
                             @Html.DisplayFor(m => item.date_Create)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.dealLine)
-                        </td>
-                        @*<td>
-                                @Html.DisplayFor(m => item.tbl_User.phone)
-                            </td>*@
-                        <td>
-                            @Html.DisplayFor(m => item.cost)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.tbl_User.fullname)
+                            @Html.DisplayFor(m => item.tbl_User.U_fullname)
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.tbl_User.tbl_Group.group_Name)
                         </td>
                         <td>
-                            @*<a href="@Url.Action("Details","Business",new {id = item.id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Chi tiết và xác nhận </a>*@
-                            <a href="@Url.Action("Details","Request",new {id = item.id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                            <a href="@Url.Action("Edit","Request",new {id = item.id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                            @*<a href="@Url.Action("Edit","Request",new {id = item.id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
-                                <a href="@Url.Action("Delete","Request",new {id = item.id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>*@
+                            <a href="@Url.Action("ListRequestDetails","Root",new {id = item.id })" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                            <a href="@Url.Action("RequestEdit","Root",new {id = item.id })" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                            <a href="@Url.Action("Delete","Root",new {id = item.id })" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
                             @*@Html.ActionLink("<i class='fa fa - folder'></i> View", "Edit", new { id = item.id },new {@class = "btn btn-primary btn-xs" }) |
                                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
                                 @Html.ActionLink("Delete", "Delete", new { id = item.id })*@

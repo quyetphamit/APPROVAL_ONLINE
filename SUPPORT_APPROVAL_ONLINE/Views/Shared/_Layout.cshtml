@@ -128,7 +128,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>@user.U_fullname</h2>
+                            <h2>@user.fullname</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -145,6 +145,7 @@
                                     <ul class="nav child_menu">
                                         <li><a href="@Url.Action("Index", "Request")">Tất cả danh sách</a></li>
                                         <li><a href="@Url.Action("getRequestByUserApproval", "Business")">Cần phê duyệt</a></li>
+                                        <li><a href="@Url.Action("getRequestApprovalSuccess", "Business")">Đã phê duyệt</a></li>
                                         <li><a href="@Url.Action("getRequestByUserCreate", "Business")">Đã tạo</a></li>
                                         @*<li><a href="index3.html">Dashboard3</a></li>*@
                                     </ul>
@@ -167,30 +168,39 @@
                                             <a>Bộ phận yêu cầu<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
                                                 <li class="sub_menu">
-                                                    <a href="level2.html">PD1</a>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "PD1"})">PD1</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#level2_1">PD2</a>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "PD2"})">PD2</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#level2_2">MC</a>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "MC"})">MC</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#level2_2">PC</a>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "PC"})">PC</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#level2_2">HLDS</a>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "HLDS"})">HLDS</a>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a>Bộ phận LCA<span class="fa fa-chevron-down"></span></a>
                                             <ul class="nav child_menu">
-                                                <li class="sub_menu">
-                                                    <a href="level2.html">Leader</a>
+                                                <li>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "MNG-LCA"})">MNG</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#level2_1">MNG</a>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "Automation-LCA"})">Automation</a>
+                                                </li>
+                                                <li>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "Jig/Palet-LCA"})">Jig/Palet</a>
+                                                </li>
+                                                <li>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "Table/Shelf-LCA"})">Table/Shelf</a>
+                                                </li>
+                                                <li>
+                                                    <a href="@Url.Action("getByDept","Business",new {dept = "Plastic tray-LCA"})">Platic Tray</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -217,8 +227,8 @@
                                 <li>
                                     <a><i class="fa fa-bar-chart-o"></i> Thống kê <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="chartjs.html">Theo phòng ban</a></li>
-                                        <li><a href="chartjs2.html">Theo năm</a></li>
+                                        <li><a href="@Url.Action("Chart","Home")">Theo phòng ban</a></li>
+                                        <li><a href="@Url.Action("Index","Home")">Theo năm</a></li>
                                         @*<li><a href="morisjs.html">Moris JS</a></li>
                                             <li><a href="echarts.html">ECharts</a></li>
                                             <li><a href="other_charts.html">Other Charts</a></li>*@
@@ -316,7 +326,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/Content/images/img.jpg" alt="">@user.U_fullname
+                                    <img src="~/Content/images/img.jpg" alt="">@user.fullname
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">

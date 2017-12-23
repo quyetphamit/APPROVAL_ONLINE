@@ -28,10 +28,10 @@
         <img src="~/Content/Login/img/logo.ico" />
         @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "login-form" }))
             {
-            @Html.TextBoxFor(model => model.U_username, new { @placeholder = "Username" })
-            @Html.ValidationMessageFor(model => model.U_username, "", new { @class = "messageError" })
-            @Html.PasswordFor(model => model.U_password, new { @placeholder = "Password" })
-            @Html.ValidationMessageFor(model => model.U_password, "", new { @class = "messageError" })
+            @Html.TextBoxFor(model => model.username, new { @placeholder = "Username" })
+            @Html.ValidationMessageFor(model => model.username, "", new { @class = "messageError" })
+            @Html.PasswordFor(model => model.password, new { @placeholder = "Password" })
+            @Html.ValidationMessageFor(model => model.password, "", new { @class = "messageError" })
             <label class="messageError">@ViewBag.loginInvalid</label>
 
             <input type="submit" name="login" class="buttonLogin" value="Login" />

@@ -3,13 +3,12 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var currDate = DateTime.Now.ToString("dd/MM/yyyy");
+    var currDate = DateTime.Now.ToString("dd.MM.yyyy");
     var userSession = Session["user"] as tbl_User;
 }
 
-<h2>Edit</h2>
 
-@using (Html.BeginForm("Edit","Business"))
+@using (Html.BeginForm("Edit", "Business"))
 {
     @Html.AntiForgeryToken()
 
@@ -40,16 +39,30 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                @Html.HiddenFor(model => model.U_Id_Approval)
-                @Html.HiddenFor(model => model.U_Id_Create)
-                @Html.HiddenFor(model => model.date_Create)
-                @Html.HiddenFor(model => model.customer_Id)
-                @Html.HiddenFor(model =>model.U_Id_Dept_MNG)
-                @Html.HiddenFor(model => model.U_Id_LCA_Leader)
-                @Html.HiddenFor(model => model.U_Id_LCA_MNG)
-                @Html.HiddenFor(model => model.U_Id_FM)
-                @Html.HiddenFor(model => model.U_Id_GD)
-                @Html.HiddenFor(model => model.dealLine)
+                @Html.HiddenFor(m => m.U_Id_Approval)
+                @Html.HiddenFor(m => m.U_Id_Create)
+                @Html.HiddenFor(m => m.customer_Id)
+                @Html.HiddenFor(m => m.U_Id_Dept_MNG)
+                @Html.HiddenFor(m => m.U_Id_LCA_Leader)
+                @Html.HiddenFor(m => m.U_Id_LCA_MNG)
+                @Html.HiddenFor(m => m.U_Id_FM)
+                @Html.HiddenFor(m => m.U_Id_GD)
+                @Html.HiddenFor(m => m.date_Create)
+                @Html.HiddenFor(m => m.dealLine)
+                @Html.HiddenFor(m => m.date_Received)
+
+                @Html.HiddenFor(m => m.date_Dept_MNG_Approval)
+                @Html.HiddenFor(m => m.date_Comtor_Approval)
+                @Html.HiddenFor(m => m.date_Dept_Confirm)
+                @Html.HiddenFor(m => m.date_LCA_Leader_Approval)
+                @Html.HiddenFor(m => m.date_LCA_MNG_Approval)
+                @Html.HiddenFor(m => m.date_FM_Approval)
+                @Html.HiddenFor(m => m.date_GD_Approval)
+                @Html.HiddenFor(m => m.date_Update)
+                @if (Model.date_LCA_Leader_Approval != null)
+                {
+                    @Html.HiddenFor(m => m.date_Finish)
+                }
                 <div class="form-group">
                     <label class="control-label col-md-1" for="content">@Html.DisplayNameFor(m => m.title)</label>
                     <div class="col-md-11">
@@ -68,11 +81,15 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.file_upload)</label>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @Html.TextBoxFor(m => m.file_upload, new { @class = "form-control", @readonly = "readonly" })
                     </div>
                     <div class="col-md-1">
                         @Html.ActionLink("View PDF", "ViewPDF", "Business", new { name = Model.file_upload }, new { target = "_blank" })
+                    </div>
+                    <label class="control-label col-md-2">@Html.DisplayNameFor(m => m.date_Create)</label>
+                    <div class="col-md-2">
+                        <div class="form-control">@Html.DisplayFor(m => m.date_Create)</div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -82,12 +99,11 @@
                     </div>
                     <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.dealLine)</label>
                     <div class="col-md-2">
-                        <div class="form-control">@Html.DisplayFor(m=>m.dealLine)</div>
-                        @*@Html.EditorFor(m => m.dealLine, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })*@
+                        <div class="form-control">@Html.DisplayFor(m => m.dealLine)</div>
                         @Html.ValidationMessageFor(model => model.dealLine, "", new { @class = "text-danger" })
                     </div>
                     <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.tbl_Customer.customer_Name)</label>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         @Html.TextBoxFor(m => m.tbl_Customer.customer_Name, new { @class = "form-control", @readonly = "readonly" })
                     </div>
                     <label class="control-label col-md-1">@Html.DisplayNameFor(m => m.model)</label>
@@ -277,7 +293,7 @@
                 </div>
             </div>
         </div>
-        @if (userSession.tbl_Permission.allow.Equals("admin") && userSession.tbl_Group.group_Name.Contains("LCA") && !userSession.tbl_Group.group_Name.Contains("MNG"))
+        @if (userSession.tbl_Permission.allow.Equals("approval") && userSession.tbl_Group.group_Name.Contains("LCA") && !userSession.tbl_Group.group_Name.Contains("MNG"))
         {
             <div class="x_panel" style="background-color:#5af287">
                 <div class="x_title">
@@ -315,13 +331,14 @@
                             </div>*@
                         <div class="col-md-2">
                             <div class='input-group date' id='datepicker1'>
-                                @Html.EditorFor(model => model.date_Finish, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                @*@Html.EditorFor(m => m.date_Finish, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })*@
+                                @Html.EditorFor(m => m.date_Finish, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
-                            @*@Html.ValidationMessageFor(model => model.date_Finish, "dateFinishNull", new { @class = "text-danger" })*@
-                            @Html.ValidationMessage("dateFinishNull",new { @class = "text-danger"})
+
+                            @Html.ValidationMessage("dateFinishNull", new { @class = "text-danger" })
                         </div>
                         @Html.LabelFor(m => m.cost, new { @class = "control-label col-md-1" })
                         <div class="col-md-2">
@@ -349,58 +366,110 @@
                 </div>
             </div>
         }
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Gửi xác nhận tới</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Settings 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <div class="form-group">
-                    @*<label class="control-label col-md-2">Gửi đến bộ phận</label>*@
-                    <div class="col-md-3">
-                        @Html.DropDownList("group_Id", null, new { @class = "form-control" })
+        @if ((userSession.tbl_Permission.allow.Equals("approval") && userSession.tbl_Group.group_Name.Contains("LCA") && userSession.tbl_Group.group_Name.Contains("MNG")) || (Model.date_LCA_MNG_Approval != null))
+        {
+            <div class="x_panel" style="background-color:#5af287">
+                <div class="x_title">
+                    <h2 class="label label-danger">Dành cho LCA</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.date_Received, new { @class = "control-label col-md-1" })
+                        <div class="col-md-2">
+                            <div class="form-control">@Html.DisplayFor(m => m.date_Received)</div>
+                        </div>
+                        @Html.LabelFor(m => m.date_Finish, new { @class = "control-label col-md-1" })
+                        <div class="col-md-2">
+                            <div class="form-control">@Html.DisplayFor(m => m.date_Finish)</div>
+
+                        </div>
+                        @Html.LabelFor(m => m.cost, new { @class = "control-label col-md-1" })
+                        <div class="col-md-2">
+                            @Html.EditorFor(m => m.cost, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <label class="control-label col-md-1">File Upload</label>
+                        <div class="col-md-1">
+                            @Html.EditorFor(m => m.costDetail_upload, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        </div>
+                        <div class="col-md-1">
+                            @Html.ActionLink("View PDF", "ViewPDF", "Business", new { name = Model.file_upload }, new { target = "_blank" })
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-6 col-md-3">
-                <table>
-                    <tr>
-                        <th>Phê duyệt</th>
-                    </tr>
-                    <tr>
-                        <td><input type="text" id="name" disabled /></td>
+        }
+        @*<div class="x_panel">
+                <div class="x_title">
+                    <h2>Gửi xác nhận tới</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.DropDownList("group_Id", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        @*<div class="form-group">
+                <div class="col-md-offset-6 col-md-3">
+                    <table>
+                        <tr>
+                            <th>Phê duyệt</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="name" disabled /></td>
 
-                    </tr>
-                    <tr>
-                        <td><input type="text" id="phone" disabled /></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+                        </tr>
+                        <tr>
+                            <td><input type="text" id="phone" disabled /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>*@
         <div class="form-group">
             <div class="col-md-12 col-sm-9 col-xs-12 col-md-offset-3">
                 <input type="submit" value="Approval" class="btn btn-success btn-lg" />
+                <input type="button" value="Reject" class="btn btn-primary btn-lg" />
                 <input type="button" value="Cancel" class="btn btn-primary btn-lg" />
             </div>
         </div>
@@ -413,7 +482,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var element = $("#group_Id").val();
+        @*var element = $("#group_Id").val();
         $.ajax({
             url: "@Url.Action("FindUser", "Request")",
             type: 'GET',
@@ -424,7 +493,7 @@
                 $("#name").val(data["name"]);
                 $("#phone").val(data["phone"]);
             }
-        });
+        });*@
         $('#datepicker1').datetimepicker({
             ignoreReadonly: true,
             allowInputToggle: true,
@@ -452,7 +521,7 @@
     });
 
 
-    $("#group_Id").on('change', function (e) {
+    @*$("#group_Id").on('change', function (e) {
         var element = $(this).val();
         $.ajax({
             url: "@Url.Action("FindUser", "Request")",
@@ -466,9 +535,7 @@
                 $("#phone").val(data["phone"]);
             }
         });
-
-        //FindUser("#group_Id");
-    });
+    });*@
 
     function FindUser(groupId) {
         var element = $(this).val();

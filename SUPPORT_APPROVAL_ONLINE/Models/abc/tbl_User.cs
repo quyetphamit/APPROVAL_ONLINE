@@ -1,4 +1,4 @@
-﻿namespace SUPPORT_APPROVAL_ONLINE.Models
+namespace SUPPORT_APPROVAL_ONLINE.Models.abc
 {
     using System;
     using System.Collections.Generic;
@@ -15,49 +15,36 @@
         }
 
         [Key]
-        [Column("U_Id")]
-        public int id { get; set; }
+        public int U_Id { get; set; }
 
         public int? group_Id { get; set; }
 
         public int? permission_Id { get; set; }
 
+        [Required]
         [StringLength(20)]
-        [Required(ErrorMessage = "Tên đăng nhập không được bỏ trống")]
-        [Display(Name = "Tên đăng nhập")]
-        [Column("U_username")]
-        public string username { get; set; }
+        public string U_username { get; set; }
 
+        [Required]
         [StringLength(100)]
-        [Display(Name = "Mật khẩu")]
-        [Required(ErrorMessage = "Mật khẩu không được bỏ trống")]
-        [Column("U_password")]
-        public string password { get; set; }
+        public string U_password { get; set; }
 
         [Required]
         [StringLength(50)]
-        [Display(Name = "Họ tên")]
-        [Column("U_fullname")]
-        public string fullname { get; set; }
+        public string U_fullname { get; set; }
 
         [StringLength(20)]
-        [Display(Name = "Điện thoại")]
-        [Column("U_phone")]
-        public string phone { get; set; }
+        public string U_phone { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Email")]
-        [Column("U_email")]
-        public string email { get; set; }
+        public string U_email { get; set; }
 
         [StringLength(100)]
-        [Display(Name = "Người tạo")]
-        [Column("U_create_at")]
-        public string createAt { get; set; }
+        public string U_create_at { get; set; }
+
         [StringLength(20)]
-        [Column("U_stamp")]
-        [Display(Name = "Chữ kí")]
-        public string stamp { get; set; }
+        public string U_stamp { get; set; }
+
         public virtual tbl_Group tbl_Group { get; set; }
 
         public virtual tbl_Permission tbl_Permission { get; set; }

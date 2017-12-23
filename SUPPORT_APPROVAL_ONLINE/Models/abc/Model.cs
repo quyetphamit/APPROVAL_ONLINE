@@ -1,14 +1,14 @@
-namespace SUPPORT_APPROVAL_ONLINE.Models
+namespace SUPPORT_APPROVAL_ONLINE.Models.abc
 {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class RequestEntity : DbContext
+    public partial class Model : DbContext
     {
-        public RequestEntity()
-            : base("name=Connection")
+        public Model()
+            : base("name=Model")
         {
         }
 
@@ -46,23 +46,24 @@ namespace SUPPORT_APPROVAL_ONLINE.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<tbl_User>()
-                .Property(e => e.username)
+                .Property(e => e.U_username)
                 .IsUnicode(false);
 
             modelBuilder.Entity<tbl_User>()
-                .Property(e => e.password)
+                .Property(e => e.U_password)
                 .IsUnicode(false);
 
             modelBuilder.Entity<tbl_User>()
-                .Property(e => e.phone)
+                .Property(e => e.U_phone)
                 .IsUnicode(false);
 
             modelBuilder.Entity<tbl_User>()
-                .Property(e => e.email)
+                .Property(e => e.U_email)
                 .IsUnicode(false);
+
             modelBuilder.Entity<tbl_User>()
-               .Property(e => e.stamp)
-               .IsUnicode(false);
+                .Property(e => e.U_stamp)
+                .IsUnicode(false);
 
             modelBuilder.Entity<tbl_User>()
                 .HasMany(e => e.tbl_Request)

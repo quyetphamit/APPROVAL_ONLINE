@@ -20,8 +20,8 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         [HttpPost]
         public ActionResult Login(tbl_User user)
         {
-            //var pass = Common.EncryptionMD5(user.pass);
-            var userDetail = db.tbl_User.Where(r => r.U_username == user.U_username && r.U_password == user.U_password).FirstOrDefault();
+            var pass = Common.EncryptionMD5(user.password);
+            var userDetail = db.tbl_User.Where(r => r.username == user.username && r.password == pass).FirstOrDefault();
             if (userDetail == null)
             {
                 ViewBag.loginInvalid = "Tên đăng nhập hoặc mật khẩu sai";

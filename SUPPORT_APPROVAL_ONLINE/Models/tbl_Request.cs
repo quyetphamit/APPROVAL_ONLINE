@@ -13,20 +13,49 @@
         public int id { get; set; }
 
         public int U_Id_Create { get; set; }
+        public int U_Id_Send { get; set; }
 
         public int U_Id_Approval { get; set; }
 
-        public int? U_Id_Dept_MNG { get; set; }
+        public int U_Id_Dept_MNG { get; set; }
 
-        public int? U_Id_LCA_Leader { get; set; }
+        public int U_Id_LCA_Leader { get; set; }
 
-        public int? U_Id_LCA_MNG { get; set; }
+        public int U_Id_LCA_MNG { get; set; }
 
-        public int? U_Id_FM { get; set; }
+        public int? U_Id_Comtor { get; set; }
 
-        public int? U_Id_GD { get; set; }
+        public int U_Id_FM { get; set; }
+
+        public int U_Id_GD { get; set; }
 
         public int customer_Id { get; set; }
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? date_Dept_MNG_Approval { get; set; }
+
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? date_LCA_Leader_Approval { get; set; }
+
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? date_LCA_MNG_Approval { get; set; }
+
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? date_Comtor_Approval { get; set; }
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? date_Dept_Confirm { get; set; }
+
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? date_FM_Approval { get; set; }
+
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? date_GD_Approval { get; set; }
 
         [Required(ErrorMessage = "Số lượng không được bỏ trống")]
         [Range(0, int.MaxValue, ErrorMessage = "Số lượng ngoài khoảng cho phép")]
@@ -34,7 +63,7 @@
         public int quantity { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày mong muốn")]
         [Required(ErrorMessage = "Ngày mong muốn không được bỏ trống")]
         public DateTime dealLine { get; set; }
@@ -106,22 +135,22 @@
         public int? cost { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày yêu cầu")]
         public DateTime date_Create { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày cập nhật")]
         public DateTime? date_Update { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày nhận")]
         public DateTime? date_Received { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Ngày trả")]
         public DateTime? date_Finish { get; set; }
 
@@ -136,6 +165,10 @@
         [StringLength(50)]
         [Display(Name = "Chi tiết báo giá")]
         public string costDetail_upload { get; set; }
+
+        [StringLength(200)]
+        [Display(Name = "Lí do")]
+        public string comment { get; set; }
 
         public virtual tbl_Customer tbl_Customer { get; set; }
 
