@@ -1,0 +1,44 @@
+﻿@model SUPPORT_APPROVAL_ONLINE.Models.tbl_User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="~/Content/Login/css/style.css">
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="info">
+            <h3>UMC ELECTRONICS VIETNAM</h3>
+            @*<span>Made with <i class="fa fa-heart"></i> by <a href="http://andytran.me">quyetphamit</a></span>*@
+        </div>
+    </div>
+    <div class="form">
+        <img src="~/Content/Login/img/logo.ico" />
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "login-form" }))
+            {
+            @Html.TextBoxFor(model => model.username, new { @placeholder = "Username" })
+            @Html.ValidationMessageFor(model => model.username, "", new { @class = "messageError" })
+            @Html.PasswordFor(model => model.password, new { @placeholder = "Password" })
+            @Html.ValidationMessageFor(model => model.password, "", new { @class = "messageError" })
+            <label class="messageError">@ViewBag.loginInvalid</label>
+
+            <input type="submit" name="login" class="buttonLogin" value="Login" />
+        }
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

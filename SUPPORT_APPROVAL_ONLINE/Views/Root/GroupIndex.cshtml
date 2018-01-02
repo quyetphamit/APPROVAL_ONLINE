@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SUPPORT_APPROVAL_ONLINE.Models.tbl_Group>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "GroupCreate")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.group_Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.group_Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "GroupEdit", new { id = item.group_Id }) |
+                @Html.ActionLink("Details", "GroupDetails", new { id = item.group_Id }) |
+                @Html.ActionLink("Delete", "GroupDelete", new { id = item.group_Id })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.ActionLink("Back to list User","Index")

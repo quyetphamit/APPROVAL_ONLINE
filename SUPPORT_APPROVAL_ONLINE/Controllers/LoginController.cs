@@ -22,6 +22,7 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         {
             var pass = Common.EncryptionMD5(user.password);
             var userDetail = db.tbl_User.Where(r => r.username == user.username && r.password == pass).FirstOrDefault();
+            //var userDetail = db.tbl_User.Where(r => r.username == user.username && r.password == user.password).FirstOrDefault();
             if (userDetail == null)
             {
                 ViewBag.loginInvalid = "Tên đăng nhập hoặc mật khẩu sai";
@@ -31,6 +32,10 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             if (userDetail.tbl_Permission.allow == "root")
             {
                 return RedirectToAction("Index", "Root");
+            }
+            if (user.password.Equals("umcvn"))
+            {
+                return RedirectToAction("ChangePassword", "User");
             }
             return RedirectToAction("Index", "Home");
         }

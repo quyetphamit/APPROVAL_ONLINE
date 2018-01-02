@@ -30,6 +30,7 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         }
         public ActionResult RequestDetails(int? id)
         {
+            userSession = Session["user"] as tbl_User;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -39,17 +40,27 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             {
                 return HttpNotFound();
             }
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
             ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r => !r.group_Name.Contains("Support") && r.group_Name.Contains("LCA")), "group_Id", "group_Name");
             return View(tbl_Request);
         }
         public ActionResult RequestDelete(int? id)
         {
+            userSession = Session["user"] as tbl_User;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             tbl_Request tbl_Request = db.tbl_Request.Find(id);
             if (tbl_Request == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
             {
                 return HttpNotFound();
             }
@@ -60,6 +71,12 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RequestDeleteConfirm(int? id)
         {
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+
             tbl_Request tbl_Request = db.tbl_Request.Find(id);
             db.tbl_Request.Remove(tbl_Request);
             db.SaveChanges();
@@ -78,12 +95,22 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             {
                 return HttpNotFound();
             }
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
             return View(tbl_User);
         }
 
         // GET: Root/Create
         public ActionResult Create()
         {
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
             ViewBag.group_Id = new SelectList(db.tbl_Group, "group_Id", "group_Name");
             ViewBag.permission_Id = new SelectList(db.tbl_Permission, "permission_Id", "allow");
             return View();
@@ -94,18 +121,29 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,group_Id,permission_Id,username,password,fullname,phone,email")] tbl_User tbl_User)
+        public ActionResult Create([Bind(Include = "id,group_Id,permission_Id,username,password,fullname,phone,email,stamp")] tbl_User tbl_User)
         {
             userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
             if (ModelState.IsValid)
             {
+                if (db.tbl_User.Any(r=>r.username == tbl_User.username))
+                {
+                    ViewBag.duplicate = "Tài khoản đã tồn tại";
+                    ViewBag.group_Id = new SelectList(db.tbl_Group, "group_Id", "group_Name", tbl_User.group_Id);
+                    ViewBag.permission_Id = new SelectList(db.tbl_Permission, "permission_Id", "allow", tbl_User.permission_Id);
+                    return View("Create", tbl_User);
+                }
                 tbl_User.password = Common.EncryptionMD5(tbl_User.password);
                 tbl_User.createAt = userSession.fullname;
                 db.tbl_User.Add(tbl_User);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            
             ViewBag.group_Id = new SelectList(db.tbl_Group, "group_Id", "group_Name", tbl_User.group_Id);
             ViewBag.permission_Id = new SelectList(db.tbl_Permission, "permission_Id", "allow", tbl_User.permission_Id);
             return View(tbl_User);
@@ -123,6 +161,11 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             {
                 return HttpNotFound();
             }
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
             ViewBag.group_Id = new SelectList(db.tbl_Group, "group_Id", "group_Name", tbl_User.group_Id);
             ViewBag.permission_Id = new SelectList(db.tbl_Permission, "permission_Id", "allow", tbl_User.permission_Id);
             return View(tbl_User);
@@ -137,6 +180,11 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         {
             var newPass = Common.EncryptionMD5(tbl_User.password);
             tbl_User.password = newPass;
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(tbl_User).State = EntityState.Modified;
@@ -160,6 +208,11 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             {
                 return HttpNotFound();
             }
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
             return View(tbl_User);
         }
 
@@ -168,12 +221,139 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
             tbl_User tbl_User = db.tbl_User.Find(id);
             db.tbl_User.Remove(tbl_User);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public ActionResult GroupIndex()
+        {
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+            return View(db.tbl_Group.ToList());
+        }
+        [HttpGet]
+        public ActionResult GroupCreate()
+        {
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GroupCreate([Bind(Include = "group_Id,group_Name")] tbl_Group tbl_Group)
+        {
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                db.tbl_Group.Add(tbl_Group);
+                db.SaveChanges();
+                return RedirectToAction("GroupIndex");
+            }
 
+            return View(tbl_Group);
+        }
+        public ActionResult GroupDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_Group tbl_Group = db.tbl_Group.Find(id);
+            if (tbl_Group == null)
+            {
+                return HttpNotFound();
+            }
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+            return View(tbl_Group);
+        }
+        public ActionResult GroupEdit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_Group tbl_Group = db.tbl_Group.Find(id);
+            if (tbl_Group == null)
+            {
+                return HttpNotFound();
+            }
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+            return View(tbl_Group);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GroupEdit([Bind(Include = "group_Id,group_Name")] tbl_Group tbl_Group)
+        {
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                db.Entry(tbl_Group).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("GroupIndex");
+            }
+            return View(tbl_Group);
+        }
+        public ActionResult GroupDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_Group tbl_Group = db.tbl_Group.Find(id);
+            if (tbl_Group == null)
+            {
+                return HttpNotFound();
+            }
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+            return View(tbl_Group);
+        }
+        [HttpPost, ActionName("GroupDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult GroupDelete(int id)
+        {
+            userSession = Session["user"] as tbl_User;
+            if (!userSession.tbl_Permission.permission_Id.Equals(1))
+            {
+                return HttpNotFound();
+            }
+            tbl_Group tbl_Group = db.tbl_Group.Find(id);
+            db.tbl_Group.Remove(tbl_Group);
+            db.SaveChanges();
+            return RedirectToAction("GroupIndex");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

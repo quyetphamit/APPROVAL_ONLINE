@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using SUPPORT_APPROVAL_ONLINE.Models;
 using SUPPORT_APPROVAL_ONLINE.Util;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace SUPPORT_APPROVAL_ONLINE.Controllers
 {
@@ -41,8 +43,6 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             var userCreate = db.tbl_User.Find(tbl_Request.U_Id_Create);
 
             var deptMGN = db.tbl_User.Find(tbl_Request.U_Id_Dept_MNG);
-
-
 
             ViewBag.requestorName = userCreate.fullname;
             ViewBag.requestorPhone = userCreate.phone;
@@ -81,8 +81,9 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         public ActionResult Create()
         {
             ViewBag.customer_Id = new SelectList(db.tbl_Customer, "customer_Id", "customer_Name");
-            ViewBag.U_Id_Create = new SelectList(db.tbl_User, "U_Id", "U_username");
-            ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r => !r.group_Name.Contains("Support") && r.group_Name.Contains("LCA") && !r.group_Name.Contains("MNG")), "group_Id", "group_Name");
+            //ViewBag.U_Id_Create = new SelectList(db.tbl_User, "U_Id", "U_username");
+            ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r=>r.group_Name.Contains("LCA") && !r.group_Name.Contains("MNG")), "group_Id", "group_Name");
+            ViewBag.U_Id_Comtor = new SelectList(db.tbl_User.Where(r=>r.tbl_Group.group_Name.Equals("Comtor") && r.tbl_Permission.permission_Id.Equals(2)), "id", "fullname");
             return View();
         }
 
@@ -91,19 +92,30 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "U_Id_Approval,U_Id_Dept_MNG,U_Id_LCA_Leader,U_Id_LCA_MNG,U_Id_FM,U_Id_GD,customer_Id,quantity,dealLine,title,increaseProductivity,newModel,increaseProduction,improve,C_5s,checkJig,reducePeple,errorContent,currentError,afterError,cost_Savings,other,pay,model,pcb,contentDetail,cost,date_Create,date_Update,date_Received,date_Finish,file_upload,file_upload_update,costDetail_upload")] tbl_Request tbl_Request)
+        public ActionResult Create([Bind(Include = "U_Id_Approval,U_Id_Dept_MNG,U_Id_LCA_Leader,U_Id_LCA_MNG,U_Id_Comtor,U_Id_FM,U_Id_GD,customer_Id,quantity,dealLine,title,increaseProductivity,newModel,increaseProduction,improve,C_5s,checkJig,reducePeple,errorContent,currentError,afterError,cost_Savings,other,pay,model,pcb,contentDetail,cost,date_Create,date_Update,date_Received,date_Finish,file_upload,file_upload_update,costDetail_upload")] tbl_Request tbl_Request)
         {
             sess = Session["user"] as tbl_User;
-            //SessionInfo info = new SessionInfo();
 
-            tbl_Request.U_Id_LCA_MNG = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("MNG-LCA") && r.tbl_Permission.allow.Contains("approval")).FirstOrDefault().id;
-            tbl_Request.U_Id_FM = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("FM") && r.tbl_Permission.allow.Contains("approval")).FirstOrDefault().id;
-
-            tbl_Request.U_Id_GD = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("GD") && r.tbl_Permission.allow.Contains("approval")).FirstOrDefault().id;
-
+            if (tbl_Request.increaseProductivity == false && tbl_Request.newModel == false && tbl_Request.increaseProduction == false && tbl_Request.improve == false && tbl_Request.C_5s == false && tbl_Request.checkJig == false)
+            {
+                ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r => !r.group_Name.Equals("Support")), "group_Id", "group_Name");
+                ViewBag.customer_Id = new SelectList(db.tbl_Customer, "customer_Id", "customer_Name", tbl_Request.customer_Id);
+                ViewBag.U_Id_Create = new SelectList(db.tbl_User, "U_Id", "U_username", tbl_Request.U_Id_Create);
+                ViewBag.U_Id_Comtor = new SelectList(db.tbl_User.Where(r => r.tbl_Group.group_Name.Equals("Comtor") && r.tbl_Permission.permission_Id.Equals(2)), "id", "fullname",tbl_Request.U_Id_Comtor);
+                ViewBag.error = "Chưa chọn phân loại Jig";
+                return View(tbl_Request);
+            }
             string groupName = db.tbl_User.Find(sess.id).tbl_Group.group_Name;
-            var deptMngId = db.tbl_User.Where(r => r.tbl_Group.group_Name.Equals(groupName) && r.tbl_Permission.allow.Equals("approval")).FirstOrDefault().id;
-            //Session["info"] = info;
+
+            tbl_Request.U_Id_LCA_MNG = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("MNG-LCA") && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault().id;
+            //if (comtor != null)
+            //{
+            //    tbl_Request.U_Id_Comtor = comtor.id;
+            //}
+            tbl_Request.U_Id_FM = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("FM") && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault().id;
+            tbl_Request.U_Id_GD = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("GD") && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault().id;
+
+            var deptMngId = db.tbl_User.Where(r => r.tbl_Group.group_Name.Equals(groupName) && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault().id;
 
             if (ModelState.IsValid)
             {
@@ -112,6 +124,8 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
                 tbl_Request.date_Create = DateTime.Now;
                 db.tbl_Request.Add(tbl_Request);
                 db.SaveChanges();
+                Common.SendMail("quyetphamit@gmail.com",sess.fullname, false);
+                Common.SendMail("quyetphamit@gmail.com", sess.fullname, true);
                 return RedirectToAction("Index");
             }
             ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r => !r.group_Name.Equals("Support")), "group_Id", "group_Name");
@@ -119,7 +133,55 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             ViewBag.U_Id_Create = new SelectList(db.tbl_User, "U_Id", "U_username", tbl_Request.U_Id_Create);
             return View(tbl_Request);
         }
+        public ActionResult CreateConfirm(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_Request tbl_Request = db.tbl_Request.Find(id);
+            if (tbl_Request == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.customer_Id = new SelectList(db.tbl_Customer, "customer_Id", "customer_Name");
+            ViewBag.U_Id_Create = new SelectList(db.tbl_User, "U_Id", "U_username");
+            ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r => !r.group_Name.Contains("Support") && r.group_Name.Contains("LCA") && !r.group_Name.Contains("MNG")), "group_Id", "group_Name");
+            return View(tbl_Request);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateConfirm([Bind(Include = "id,U_Id_Approval,U_Id_Dept_MNG,U_Id_LCA_Leader,U_Id_LCA_MNG,U_Id_Comtor,U_Id_FM,U_Id_GD,customer_Id,quantity,dealLine,title,increaseProductivity,newModel,increaseProduction,improve,C_5s,checkJig,reducePeple,errorContent,currentError,afterError,cost_Savings,other,pay,model,pcb,contentDetail,cost,date_Create,date_Update,date_Received,date_Finish,file_upload,file_upload_update,costDetail_upload")] tbl_Request tbl_Request)
+        {
+            sess = Session["user"] as tbl_User;
+            string groupName = db.tbl_User.Find(sess.id).tbl_Group.group_Name;
 
+            // Tìm người phiên dịch
+            //var comtor = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains(groupName) && r.tbl_Permission.permission_Id.Equals(3)).FirstOrDefault();
+            tbl_Request.U_Id_LCA_MNG = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("MNG-LCA") && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault().id;
+            //if (comtor != null)
+            //{
+            //    tbl_Request.U_Id_Comtor = comtor.id;
+            //}
+            tbl_Request.U_Id_FM = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("FM") && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault().id;
+            tbl_Request.U_Id_GD = db.tbl_User.Where(r => r.tbl_Group.group_Name.Contains("GD") && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault().id;
+
+            var deptMngId = db.tbl_User.Where(r => r.tbl_Group.group_Name.Equals(groupName) && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault().id;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(tbl_Request).State = EntityState.Modified;
+                tbl_Request.U_Id_Dept_MNG = tbl_Request.U_Id_Approval = deptMngId;
+                tbl_Request.U_Id_Create = tbl_Request.U_Id_Send = sess.id;
+                tbl_Request.date_Create = DateTime.Now;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.group_Id = new SelectList(db.tbl_Group.Where(r => !r.group_Name.Equals("Support")), "group_Id", "group_Name");
+            ViewBag.customer_Id = new SelectList(db.tbl_Customer, "customer_Id", "customer_Name", tbl_Request.customer_Id);
+            ViewBag.U_Id_Create = new SelectList(db.tbl_User, "U_Id", "U_username", tbl_Request.U_Id_Create);
+            return View(tbl_Request);
+        }
         // GET: Request/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -148,7 +210,7 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,U_Id_Create,U_Id_Approval,U_Id_Dept_MNG,U_Id_LCA_Leader,U_Id_LCA_MNG,U_Id_FM,U_Id_GD,customer_Id,quantity,dealLine,title,increaseProductivity,newModel,increaseProduction,improve,C_5s,checkJig,reducePeple,errorContent,currentError,afterError,cost_Savings,other,pay,model,pcb,contentDetail,cost,date_Create,date_Update,date_Received,date_Finish,file_upload,file_upload_update,costDetail_upload")] tbl_Request tbl_Request)
+        public ActionResult Edit([Bind(Include = "id,U_Id_Create,U_Id_Approval,U_Id_Send,U_Id_Dept_MNG,U_Id_LCA_Leader,U_Id_LCA_MNG,U_Id_FM,U_Id_GD,customer_Id,quantity,dealLine,title,increaseProductivity,newModel,increaseProduction,improve,C_5s,checkJig,reducePeple,errorContent,currentError,afterError,cost_Savings,other,pay,model,pcb,contentDetail,cost,date_Create,date_Update,date_Received,date_Finish,file_upload,file_update_1,file_update_2,file_update_3,file_update_4,file_update_5,costDetail_upload")] tbl_Request tbl_Request)
         {
             if (ModelState.IsValid)
             {
@@ -186,10 +248,24 @@ namespace SUPPORT_APPROVAL_ONLINE.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult SearchYear(int year)
+        {
+            if (year == DateTime.Now.Year)
+            {
+                return RedirectToAction("Index");
+            }
+            sess = Session["user"] as tbl_User;
+            ViewBag.totalRecord = db.tbl_Request.Where(r => r.U_Id_Approval == sess.id).Count();
+            ViewBag.year = year;
+            var result = db.tbl_Request.Where(r => r.date_Create.Year == year).ToList();
+            List<RequestStatus> list = Common.Mapping(result);
+            return View(list);
+        }
         [HttpGet]
         public JsonResult FindUser(int groupId)
         {
-            tbl_User user = db.tbl_User.Where(r => r.group_Id == groupId && r.tbl_Permission.allow.Equals("approval")).FirstOrDefault();
+
+            tbl_User user = db.tbl_User.Where(r => r.group_Id == groupId && r.tbl_Permission.permission_Id.Equals(2)).FirstOrDefault();
             if (user == null)
             {
                 return Json(new

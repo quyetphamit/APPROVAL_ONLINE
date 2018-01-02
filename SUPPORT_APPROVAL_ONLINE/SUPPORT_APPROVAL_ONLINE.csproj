@@ -186,15 +186,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\abc\Model.cs" />
-    <Compile Include="Models\abc\tbl_Customer.cs" />
-    <Compile Include="Models\abc\tbl_Group.cs" />
-    <Compile Include="Models\abc\tbl_Permission.cs" />
-    <Compile Include="Models\abc\tbl_Request.cs" />
-    <Compile Include="Models\abc\tbl_User.cs" />
+    <Compile Include="Models\ChartInfo.cs" />
     <Compile Include="Models\RequestEntity.cs" />
     <Compile Include="Models\RequestStatus.cs" />
-    <Compile Include="Models\SessionInfo.cs" />
     <Compile Include="Models\tbl_Customer.cs" />
     <Compile Include="Models\tbl_Group.cs" />
     <Compile Include="Models\tbl_Permission.cs" />
@@ -202,6 +196,7 @@
     <Compile Include="Models\tbl_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Common.cs" />
+    <Compile Include="Util\CONST.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -5313,6 +5308,7 @@
     <Content Include="Content\vendors\validator\.gitignore" />
     <Content Include="Content\vendors\validator\README.md" />
     <Content Include="Content\vendors\validator\validator.jquery.json" />
+    <None Include="Properties\PublishProfiles\Demo.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -5352,14 +5348,6 @@
     <Content Include="Views\Business\getRequestByUserApproval.cshtml" />
     <Content Include="Views\Business\ViewPDF.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Temp\Create.cshtml" />
-    <Content Include="Views\Temp\Delete.cshtml" />
-    <Content Include="Views\Temp\Details.cshtml" />
-    <Content Include="Views\Temp\Edit.cshtml" />
-    <Content Include="Views\Temp\Index.cshtml" />
-    <Content Include="Views\Temp\ListRequest.cshtml" />
-    <Content Include="Views\Temp\ListRequestDetails.cshtml" />
-    <Content Include="Views\Temp\RequestEdit.cshtml" />
     <Content Include="Views\Root\Create.cshtml" />
     <Content Include="Views\Root\Delete.cshtml" />
     <Content Include="Views\Root\Details.cshtml" />
@@ -5371,7 +5359,17 @@
     <Content Include="Views\Business\getByDept.cshtml" />
     <Content Include="Views\Business\getRequestApprovalSuccess.cshtml" />
     <Content Include="Views\Home\Chart.cshtml" />
-    <Content Include="Views\Temp\View.cshtml" />
+    <Content Include="Views\Business\Reject.cshtml" />
+    <Content Include="Views\Business\RequestEdit.cshtml" />
+    <Content Include="Views\Request\CreateConfirm.cshtml" />
+    <Content Include="Views\Root\GroupIndex.cshtml" />
+    <Content Include="Views\Root\GroupCreate.cshtml" />
+    <Content Include="Views\Root\GroupDetails.cshtml" />
+    <Content Include="Views\Root\GroupEdit.cshtml" />
+    <Content Include="Views\Root\GroupDelete.cshtml" />
+    <Content Include="Views\Request\Edit.cshtml" />
+    <Content Include="Views\Request\SearchYear.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

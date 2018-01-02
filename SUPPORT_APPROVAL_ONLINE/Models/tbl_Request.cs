@@ -23,7 +23,7 @@
 
         public int U_Id_LCA_MNG { get; set; }
 
-        public int? U_Id_Comtor { get; set; }
+        public int ? U_Id_Comtor { get; set; }
 
         public int U_Id_FM { get; set; }
 
@@ -44,6 +44,9 @@
 
         [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? date_Requestor_Approval { get; set; }
+        [Column(TypeName = "date")]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? date_Comtor_Approval { get; set; }
         [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
@@ -59,18 +62,18 @@
 
         [Required(ErrorMessage = "Số lượng không được bỏ trống")]
         [Range(0, int.MaxValue, ErrorMessage = "Số lượng ngoài khoảng cho phép")]
-        [Display(Name = "Số lượng")]
+        [Display(Name = "Số lượng *")]
         public int quantity { get; set; }
 
         [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày mong muốn")]
+        [Display(Name = "Mong muốn *")]
         [Required(ErrorMessage = "Ngày mong muốn không được bỏ trống")]
         public DateTime dealLine { get; set; }
 
         [Required(ErrorMessage = "Tiêu đề không được bỏ trống")]
         [StringLength(100, ErrorMessage = "Tiêu đề không được vượt quá 100 kí tự")]
-        [Display(Name = "Tiêu đề")]
+        [Display(Name = "Tiêu đề *")]
         public string title { get; set; }
 
         [Display(Name = "Tăng năng suất")]
@@ -127,11 +130,11 @@
         public string pcb { get; set; }
 
         [Column(TypeName = "ntext")]
-        [Display(Name = "Chi tiết")]
+        [Display(Name = "Chi tiết *")]
         [AllowHtml]
         public string contentDetail { get; set; }
 
-        [Display(Name = "Báo giá")]
+        [Display(Name = "Báo giá *")]
         public int? cost { get; set; }
 
         [Column(TypeName = "date")]
@@ -151,23 +154,35 @@
 
         [Column(TypeName = "date")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Ngày trả")]
+        [Display(Name = "Ngày trả *")]
         public DateTime? date_Finish { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Tệp tải lên")]
+        [Display(Name = "Upload *")]
         public string file_upload { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Cập nhật")]
-        public string file_upload_update { get; set; }
-
+        [Display(Name ="Update_1")]
+        public string file_update_1 { get; set; }
+        [StringLength(50)]
+        [Display(Name = "Update_2")]
+        public string file_update_2 { get; set; }
+        [StringLength(50)]
+        [Display(Name = "Update_3")]
+        public string file_update_3 { get; set; }
+        [StringLength(50)]
+        [Display(Name = "Update_4")]
+        public string file_update_4 { get; set; }
+        [StringLength(50)]
+        [Display(Name = "Update_5")]
+        public string file_update_5 { get; set; }
         [StringLength(50)]
         [Display(Name = "Chi tiết báo giá")]
         public string costDetail_upload { get; set; }
 
         [StringLength(200)]
         [Display(Name = "Lí do")]
+        [AllowHtml]
         public string comment { get; set; }
 
         public virtual tbl_Customer tbl_Customer { get; set; }

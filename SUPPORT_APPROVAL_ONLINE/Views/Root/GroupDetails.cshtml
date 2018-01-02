@@ -1,0 +1,26 @@
+﻿@model SUPPORT_APPROVAL_ONLINE.Models.tbl_Group
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.group_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.group_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.group_Id }) |
+    @Html.ActionLink("Back to List", "GroupIndex")
+</p>
